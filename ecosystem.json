@@ -1,0 +1,22 @@
+{
+    "apps": [
+        {
+            /* APP todo-backend */
+            "name": "todo-backend",
+            "script": "./src/server.js",
+            "watch": true,
+            "merge_logs": true,
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "env_staging": {
+                "NODE_ENV": "staging",
+                "TEST": true
+            },
+            "env_production": {
+                "NODE_ENV": "production",
+                "PORT": "4200"
+            }
+        }
+    ]
+}
