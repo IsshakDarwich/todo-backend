@@ -28,17 +28,18 @@ class TaskController{
     
     async newTask(req, res) {
         //populate task bean
-        let task = new Task(null,req.body.task);
+        let task = new Task(null, req.body.task);
 
-        //handles null error 
+        //handles null error
         if(!task.task){
             res.status(400).send({ error:true, message: 'Provide task info!' });
         }else{
             let dao = new TaskDao();
-            dao.newTask(task.task, function(err, task) {
+            dao.newTask(task.task, function(err, result) {
                 if (err)
                     res.send(err);
-                    
+
+                task.idTask = result.insertId;//populate id returned from sql
                 res.json(task);
             });
         }
@@ -56,7 +57,8 @@ class TaskController{
                 if (err)
                     res.send(err);
 
-                res.json(task);
+                res.send(true);
+                //res.json(task);
             });
         }
     }
@@ -68,7 +70,7 @@ class TaskController{
                 res.send(err);
 
             //res.json({ message: 'Task successfully deleted' });
-            res.send(result);
+            res.send(true);
         });
     }
 
@@ -79,7 +81,7 @@ class TaskController{
                 res.send(err);
 
             //res.json({ message: 'Task successfully checked' });
-            res.send(result);
+            res.send(true);
         });
     }
 
@@ -90,7 +92,7 @@ class TaskController{
                 res.send(err);
 
             //res.json({ message: 'Task successfully checked' });
-            res.send(result);
+            res.send(true);
         });
     }
 }
