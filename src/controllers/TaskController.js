@@ -3,11 +3,13 @@
 const Task = require("../models/Task");//with ").Task" (on the end) it allows me to import more than one thing
 const TaskDao = require("../daos/TaskDao");//with ").TaskDao"...
 
-class TaskController{
+class TaskController
+{
 
-    async getAllTasks (req, res) {
+    async getAll(req, res)
+    {
         let dao = new TaskDao();
-        dao.getAllTasks(function(err, task) {
+        dao.getAll(function(err, task) {
             if (err)
                 res.send(err);
 
@@ -15,18 +17,20 @@ class TaskController{
         });
     }
 
-    async getTaskById(req, res) {
+    async getById(req, res)
+    {
         let task = new Task(req.params.id);
         
         let dao = new TaskDao();
-        dao.getTaskById(task.idTask, function(err, task) {
+        dao.getById(task.idTask, function(err, task) {
             if (err)
                 res.send(err);
             res.json(task);
         });
     }
     
-    async newTask(req, res) {
+    async newTask(req, res)
+    {
         //populate task bean
         let task = new Task(null, req.body.task);
 
@@ -45,7 +49,8 @@ class TaskController{
         }
     }
 
-    async editTask (req, res) {
+    async edit(req, res)
+    {
         //check req integrity
         if(req.params.id !== req.body.idTask){
             res.send(false);
@@ -53,7 +58,7 @@ class TaskController{
             let task = new Task(req.body.idTask, req.body.task);
 
             let dao = new TaskDao();
-            dao.editTask(task.idTask, task.task, function(err, task) {
+            dao.edit(task.idTask, task.task, function(err, task) {
                 if (err)
                     res.send(err);
 
@@ -63,9 +68,10 @@ class TaskController{
         }
     }
 
-    async deleteTask (req, res) {
+    async delete(req, res)
+    {
         let dao = new TaskDao();
-        dao.deleteTask(req.params.id, function(err, result) {
+        dao.delete(req.params.id, function(err, result) {
             if (err)
                 res.send(err);
 
@@ -74,9 +80,10 @@ class TaskController{
         });
     }
 
-    async checkTask (req, res){
+    async check(req, res)
+    {
         let dao = new TaskDao();
-        dao.checkTask(req.params.id, function(err, result) {
+        dao.check(req.params.id, function(err, result) {
             if (err)
                 res.send(err);
 
@@ -85,9 +92,10 @@ class TaskController{
         });
     }
 
-    async uncheckTask (req, res){
+    async uncheck(req, res)
+    {
         let dao = new TaskDao();
-        dao.uncheckTask(req.params.id, function(err, result) {
+        dao.uncheck(req.params.id, function(err, result) {
             if (err)
                 res.send(err);
 
